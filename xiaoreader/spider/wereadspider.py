@@ -59,7 +59,7 @@ class WereadSpider(scrapy.Spider):
 
         book['cate'] = json_item['category']
         book['title'] = json_item['title']
-        book['intro'] = json_item['intro']
+        book['intro'] = json_item['intro'].strip()
         book['star'] = json_item['star'] if 'star' in json_item else 0
 
         yield Request(rate_url.format(bookid), headers=headers, callback=self.parse_book2, meta={"book": book})
