@@ -24,12 +24,12 @@ class WereadSpider(scrapy.Spider):
     allowed_domains = ['weread.qq.com']
 
     def start_requests(self):
-        return [Request('http://i.weread.qq.com/book/info?bookId=182590', headers=headers, callback=self.parse_cate)]
-        # return [Request(root_url.format(int(time.time())), headers=headers, callback=self.parse_cate)]
+        # return [Request('http://i.weread.qq.com/book/info?bookId=182590', headers=headers, callback=self.parse_cate)]
+        return [Request(root_url.format(int(time.time())), headers=headers, callback=self.parse_cate)]
 
     def parse_cate(self, response):
-        json_cate = json.loads(open('C:\\Users\\BaoQiang\\Desktop\\cate.json', 'r', encoding='utf-8').read().strip())
-        # json_cate = json.loads(response.body.decode())
+        # json_cate = json.loads(open('C:\\Users\\BaoQiang\\Desktop\\cate.json', 'r', encoding='utf-8').read().strip())
+        json_cate = json.loads(response.body.decode())
 
         for cate in json_cate['categories']:
             for subcate in cate['sublist']:
@@ -37,7 +37,7 @@ class WereadSpider(scrapy.Spider):
                 total_cnt = subcate['totalCount']
 
                 for i in range(int(total_cnt / 20) + 1):
-                    return Request(cate_url.format(subcateid, i * 20), headers=headers, callback=self.parse_item)
+                    yield Request(cate_url.format(subcateid, i * 20), headers=headers, callback=self.parse_item)
 
     def parse_item(self, response):
         json_list = json.loads(response.body.decode())
@@ -46,7 +46,7 @@ class WereadSpider(scrapy.Spider):
             bookid = book['bookInfo']['bookId']
             yield Request(book_url.format(bookid), headers=headers, callback=self.parse_book, meta={"bid": bookid})
 
-            break
+            # break
 
     def parse_book(self, response):
         bookid = response.meta['bid']
