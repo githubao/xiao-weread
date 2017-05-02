@@ -14,6 +14,9 @@ import requests
 import json
 import scrapy
 from scrapy import Request
+from xiaoreader.pth import *
+
+out_file = '{}/{}'.format(FILE_PATH, 'wxread.json')
 
 
 class WereadSpider(scrapy.Spider):
@@ -34,22 +37,41 @@ class WereadSpider(scrapy.Spider):
                 total_cnt = subcate['totalCount']
 
                 for i in range(int(total_cnt / 20) + 1):
-                    yield Request(cate_url.format(subcateid, i * 20), headers=headers, callback=self.parse_item)
-
-                    break
+                    return Request(cate_url.format(subcateid, i * 20), headers=headers, callback=self.parse_item)
 
     def parse_item(self, response):
         json_list = json.loads(response.body.decode())
 
         for book in json_list['books']:
             bookid = book['bookInfo']['bookId']
-            yield Request(book_url.format(bookid), headers=headers, callback=self.parse_book)
+            yield Request(book_url.format(bookid), headers=headers, callback=self.parse_book, meta={"bid": bookid})
 
             break
 
     def parse_book(self, response):
+        bookid = response.meta['bid']
+
+        book = {}
+        book['url'] = response.url
+        book['id'] = bookid
+
         json_item = json.loads(response.body.decode())
-        print(json_item)
+
+        book['cate'] = json_item['category']
+        book['title'] = json_item['title']
+        book['intro'] = json_item['intro']
+        book['star'] = json_item['star']
+
+        yield Request(rate_url.format(bookid), headers=headers, callback=self.parse_book2, meta={"book": book})
+
+    def parse_book2(self, response):
+        book = response.meta['book']
+        json_item = json.loads(response.body.decode())
+        book['vote_cnt'] = json_item['data'][0]['totalCount']
+
+        with open(out_file, 'a', encoding='utf-8') as fw:
+            json.dump(book, fw, ensure_ascii=False, sort_keys=True)
+            fw.write('\n')
 
 
 def scrap():
@@ -59,6 +81,7 @@ def scrap():
 root_url = 'http://i.weread.qq.com/store/categories?recommend=0&synckey={}'
 cate_url = 'http://i.weread.qq.com/store/category?categoryId={}&count=20&maxIdx={}&synckey=0'
 book_url = 'http://i.weread.qq.com/book/info?bookId={}'
+rate_url = 'http://i.weread.qq.com/review/sameTimeReading?bookIds={}&onlyTotalCount=1'
 
 headers = {
     'Host': 'i.weread.qq.com',
