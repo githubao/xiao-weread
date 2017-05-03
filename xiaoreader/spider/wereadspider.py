@@ -8,15 +8,13 @@
 @time: 2017/5/2 20:25
 """
 
+import json
 import time
 
-import requests
-import json
 import scrapy
 from scrapy import Request
+
 from xiaoreader.pth import *
-import random
-from xiaoreader.spider.proxyapi import get_all_proxy
 
 out_file = '{}/{}'.format(FILE_PATH, 'wxread.json')
 
@@ -95,7 +93,7 @@ headers = {
     'channelId': 'AppStore',
     'User-Agent': 'WeRead/1.5.6 (iPhone; iOS 9.3; Scale/2.00)',
     'Connection': 'keep-alive',
-    'skey': '2y7ELP09',
+    'skey': 'Vt4n81It',
     'Cookie': 'wr_logined=1',
     'v': '1.5.6.462'
 }

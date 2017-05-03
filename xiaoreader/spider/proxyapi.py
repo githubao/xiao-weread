@@ -12,8 +12,8 @@ import requests
 from xiaoreader.pth import logging
 import json
 
-# url = 'http://192.168.10.195:5000'
-url = 'http://127.0.0.1:5000'
+url = 'http://192.168.10.195:5000'
+# url = 'http://127.0.0.1:5000'
 
 get_url = '{}/{}/'.format(url, 'get')
 get_all_url = '{}/{}/'.format(url, 'get_all')
