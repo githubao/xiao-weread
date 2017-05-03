@@ -2,3 +2,9 @@
 # encoding: utf-8
 
 SPIDER_MODULES = ['xiaoreader.spider']
+
+DOWNLOADER_MIDDLEWARES = {
+    'xiaoreader.spider.UserAgentMiddleware': 501,
+    # 'turingSpider3.middlewares.httpproxy.HttpProxyMiddleware': 502,
+
+}

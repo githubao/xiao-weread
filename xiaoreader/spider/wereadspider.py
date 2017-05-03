@@ -15,6 +15,8 @@ import json
 import scrapy
 from scrapy import Request
 from xiaoreader.pth import *
+import random
+from xiaoreader.spider.proxyapi import get_all_proxy
 
 out_file = '{}/{}'.format(FILE_PATH, 'wxread.json')
 
