@@ -9,7 +9,7 @@
 """
 
 import requests
-from turingSpider3.pth import logging
+from xiaoreader.pth import logging
 import json
 
 # url = 'http://192.168.10.195:5000'
