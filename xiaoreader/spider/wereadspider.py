@@ -87,13 +87,13 @@ headers = {
     'Host': 'i.weread.qq.com',
     'Accept': '*/*',
     'Proxy-Connection': 'keep-alive',
-    'vid': '17369527',
+    'vid': '107802345',
     'Accept-Encoding': 'gzip, deflate',
     'Accept-Language': 'zh-Hans-CN;q=1, en-CN;q=0.9',
     'channelId': 'AppStore',
     'User-Agent': 'WeRead/1.5.6 (iPhone; iOS 9.3; Scale/2.00)',
     'Connection': 'keep-alive',
-    'skey': 'Vt4n81It',
+    'skey': '7MJlQNyr',
     'Cookie': 'wr_logined=1',
     'v': '1.5.6.462'
 }

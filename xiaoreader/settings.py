@@ -4,5 +4,5 @@
 SPIDER_MODULES = ['xiaoreader.spider']
 
 DOWNLOADER_MIDDLEWARES = {
-    'xiaoreader.spider.httpproxy.HttpProxyMiddleware': 501,
+    # 'xiaoreader.spider.httpproxy.HttpProxyMiddleware': 501,
 }
