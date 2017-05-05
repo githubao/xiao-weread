@@ -12,7 +12,7 @@ import requests
 
 
 def tmp():
-    url = 'http://i.weread.qq.com/store/category?categoryId=14200&count=2&maxIdx=20&synckey=0'
+    url = 'https://i.weread.qq.com/store/category?categoryId=14200&count=2&maxIdx=20&synckey=0'
 
     # skey: {"errcode":-2012,"errmsg":"登录超时"}
     # vid: {"errcode":-2010,"errmsg":"用户不存在"}
@@ -31,7 +31,7 @@ def tmp():
         'v': '1.5.6.462'
     }
 
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=headers,verify=False)
     content = response.content.decode()
 
     print(content)

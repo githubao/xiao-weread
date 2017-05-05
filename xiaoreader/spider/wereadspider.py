@@ -78,10 +78,10 @@ def scrap():
     raise Exception('break loop')
 
 
-root_url = 'http://i.weread.qq.com/store/categories?recommend=0&synckey={}'
-cate_url = 'http://i.weread.qq.com/store/category?categoryId={}&count=20&maxIdx={}&synckey=0'
-book_url = 'http://i.weread.qq.com/book/info?bookId={}'
-rate_url = 'http://i.weread.qq.com/review/sameTimeReading?bookIds={}&onlyTotalCount=1'
+root_url = 'https://i.weread.qq.com/store/categories?recommend=0&synckey={}'
+cate_url = 'https://i.weread.qq.com/store/category?categoryId={}&count=20&maxIdx={}&synckey=0'
+book_url = 'https://i.weread.qq.com/book/info?bookId={}'
+rate_url = 'https://i.weread.qq.com/review/sameTimeReading?bookIds={}&onlyTotalCount=1'
 
 headers = {
     'Host': 'i.weread.qq.com',
