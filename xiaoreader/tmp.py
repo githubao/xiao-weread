@@ -17,18 +17,18 @@ def tmp():
     # skey: {"errcode":-2012,"errmsg":"登录超时"}
     # vid: {"errcode":-2010,"errmsg":"用户不存在"}
     headers = {
-        'Host': 'i.weread.qq.com',
-        'Accept': '*/*',
-        'Proxy-Connection': 'keep-alive',
+        # 'Host': 'i.weread.qq.com',
+        # 'Accept': '*/*',
+        # 'Proxy-Connection': 'keep-alive',
         'vid': '107802345',
-        'Accept-Encoding': 'gzip, deflate',
-        'Accept-Language': 'zh-Hans-CN;q=1, en-CN;q=0.9',
-        'channelId': 'AppStore',
-        'User-Agent': 'WeRead/1.5.6 (iPhone; iOS 9.3; Scale/2.00)',
-        'Connection': 'keep-alive',
+        # 'Accept-Encoding': 'gzip, deflate',
+        # 'Accept-Language': 'zh-Hans-CN;q=1, en-CN;q=0.9',
+        # 'channelId': 'AppStore',
+        # 'User-Agent': 'WeRead/1.5.6 (iPhone; iOS 9.3; Scale/2.00)',
+        # 'Connection': 'keep-alive',
         'skey': '7MJlQNyr',
-        'Cookie': 'wr_logined=1',
-        'v': '1.5.6.462'
+        # 'Cookie': 'wr_logined=1',
+        # 'v': '1.5.6.462'
     }
 
     response = requests.get(url, headers=headers,verify=False)
