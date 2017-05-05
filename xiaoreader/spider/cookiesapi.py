@@ -44,8 +44,8 @@ def req():
     url = 'https://i.weread.qq.com/guestLogin'
 
     with open('cookies.txt', 'w', encoding='utf-8') as fw:
-        # for i in range(100):
-        for i in range(3):
+        for i in range(100):
+        # for i in range(3):
             data = {
                 "deviceId": "9c7daed897c9c9e441777c1a2d655e{:02}".format(i)
             }
