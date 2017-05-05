@@ -11,6 +11,9 @@
 import requests
 import json
 import random
+from xiaoreader.pth import FILE_PATH
+
+cookie_file = '{}/cookies.txt'.format(FILE_PATH)
 
 cookie_list = []
 
@@ -23,21 +26,25 @@ def get_random_header():
 
     item = random.choice(cookie_list)
 
-    return headers.update({
+    headers.update({
         'vid': item[0],
         'skey': item[1],
     })
+
+    return headers
 
 
 def load_cookies():
     res_list = []
 
-    with open('cookies.txt', 'r', encoding='utf-8') as f:
+    with open(cookie_file, 'r', encoding='utf-8') as f:
         for line in f:
             line = line.strip()
 
             json_data = json.loads(line)
             res_list.append((json_data['vid'], json_data['skey']))
+
+    return res_list
 
 
 def req():
@@ -45,7 +52,7 @@ def req():
 
     with open('cookies.txt', 'w', encoding='utf-8') as fw:
         for i in range(100):
-        # for i in range(3):
+            # for i in range(3):
             data = {
                 "deviceId": "9c7daed897c9c9e441777c1a2d655e{:02}".format(i)
             }
@@ -74,7 +81,8 @@ headers = {
 
 
 def main():
-    req()
+    # req()
+    pass
 
 
 if __name__ == '__main__':
