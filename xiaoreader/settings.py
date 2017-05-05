@@ -6,3 +6,7 @@ SPIDER_MODULES = ['xiaoreader.spider']
 DOWNLOADER_MIDDLEWARES = {
     # 'xiaoreader.spider.httpproxy.HttpProxyMiddleware': 501,
 }
+
+# 使用延迟
+DOWNLOAD_DELAY = 0.1
+RANDOM_DOWNLOAD_DELAY = True
