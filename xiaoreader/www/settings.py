@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 
+from xiaoreader.pth import FILE_PATH
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -49,7 +51,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'xiaoweread.urls'
+ROOT_URLCONF = 'xiaoreader.www.urls'
 
 TEMPLATES = [
     {
@@ -67,7 +69,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'xiaoweread.wsgi.application'
+WSGI_APPLICATION = 'xiaoreader.www.wsgi.application'
 
 
 # Database
@@ -76,7 +78,7 @@ WSGI_APPLICATION = 'xiaoweread.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(FILE_PATH, 'db.sqlite3'),
     }
 }
 
