@@ -13,7 +13,7 @@ import time
 
 import scrapy
 from scrapy import Request
-from xiaoreader.spider.cookiesapi import get_random_header
+from xiaoreader.scrapy.spider.cookiesapi import get_random_header
 
 from xiaoreader.pth import *
 

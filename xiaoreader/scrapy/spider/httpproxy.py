@@ -20,7 +20,7 @@ from collections import defaultdict
 
 from xiaoreader.pth import logging
 import time
-from xiaoreader.spider.proxyapi import get_all_proxy
+from xiaoreader.scrapy.spider.proxyapi import get_all_proxy
 
 # 五分钟换一次
 # max_time = 5

@@ -10,10 +10,16 @@
 """
 
 from scrapy import cmdline
+import sys
 
 
 def spider_run():
-    cmdline.execute('scrapy crawl wxread_spider'.split())
+    arg = int(sys.argv[1])
+
+    if arg == 1:
+        cmdline.execute('scrapy crawl wxread_spider'.split())
+    elif arg == 2:
+        cmdline.execute('scrapy crawl huatian_spider'.split())
 
 
 def main():
