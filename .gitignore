@@ -2,6 +2,9 @@
 xiaoreader/file
 xiaoreader/log
 
+xiaoreader/weread-search/node_modules
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
