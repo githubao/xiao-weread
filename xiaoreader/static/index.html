@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>vue API</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="app" v-cloak>
+    <div class="box">
+        <input type="text" v-model="query" title="input_text" v-on:keyup.enter="startSearch"/>&nbsp;&nbsp;&nbsp;&nbsp;
+        <button @click="startSearch">search</button>
+        <br><br>
+    </div>
+
+    <div v-for="result in results">
+        <div>
+            {{ result.id }}:&nbsp;{{ result.title }}({{result.cate}})&nbsp;&nbsp;[推荐指数:&nbsp;{{result.vote_cnt}}]
+        </div>
+        <div>
+            {{ result.intro }}
+        </div>
+        <hr>
+    </div>
+
+    <div v-if="resultEmpty">
+        opps, 抱歉，未找到搜索结果
+    </div>
+
+</div>
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.9.3/vue-resource.min.js"></script>
+<script>
+    var vue = new Vue({
+        el: '#app',
+        data: {
+            results: [],
+            query: '',
+            isClicked: false
+        },
+        methods: {
+            startSearch: function () {
+                var self = this;
+                self.isClicked = true;
+                self.$http.post('/search', {
+                    query: self.query,
+                }).then(function (res) {
+                    self.results = res.data.results;
+                });
+            },
+        },
+        computed: {
+            resultEmpty: function () {
+                return this.isClicked && this.results.length === 0;
+            }
+        }
+    })
+</script>
+
+</body>
+</html>
