@@ -1,53 +1,54 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>vue API</title>
-    <style>
-        [v-cloak] {
-            display: none;
-        }
-    </style>
+    <title>Wechat Book Search Engine</title>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.9.3/vue-resource.min.js"></script>
 </head>
 <body>
 <div id="app" v-cloak>
-    <div class="box">
-        <input type="text" v-model="query" title="input_text" v-on:keyup.enter="startSearch"/>&nbsp;&nbsp;&nbsp;&nbsp;
-        <button @click="startSearch">search</button>
-        <br><br>
+    <div id="header">
+        <input type="text" v-model="query" id="input" v-on:keyup.enter="submit"/>&nbsp;&nbsp;&nbsp;&nbsp;
+        <button @click="submit" id="submit">search</button>
+        <br>
     </div>
 
-    <div v-for="result in results">
-        <div>
-            {{ result.id }}:&nbsp;{{ result.title }}({{result.cate}})&nbsp;&nbsp;[推荐指数:&nbsp;{{result.vote_cnt}}]
+    <div id="result"><p v-if="isClicked">一共找到共{{results.length}}条搜索结果</p><br>
+        <div v-for="item in part_response">
+            <div>
+                <div>
+                    <a id="'title" v-bind:href="item.url" target="_blank" class="item_title">{{ item.seqid }}:&nbsp;{{
+                        item.title }}</a>
+                    <br>{{item.cate}}&nbsp;&nbsp;[推荐指数:&nbsp;{{item.vote_cnt}}]
+                </div>
+                <div class="item_short">{{item.short}}</div>
+                <!--<p id="small_url_content">{{item.url}}&nbsp;&nbsp;{{item.date}}</p>-->
+            </div>
+            <br>
         </div>
-        <div>
-            {{ result.intro }}
+        <div id="footer">
+            <button v-if="isClicked" v-for="n in parseInt(length/10)+1" v-on:click="page_select=n+1">{{n+1}}</button>
         </div>
-        <hr>
     </div>
 
-    <div v-if="resultEmpty">
-        opps, 抱歉，未找到搜索结果
-    </div>
 
 </div>
 
-<script src="http://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.9.3/vue-resource.min.js"></script>
 <script>
     var vue = new Vue({
         el: '#app',
         data: {
             results: [],
             query: '',
+            page_select: 1,
             isClicked: false
         },
         methods: {
-            startSearch: function () {
+            submit: function () {
                 var self = this;
                 self.isClicked = true;
-                self.$http.post('/search', {
+                self.$http.post('/api/search', {
                     query: self.query,
                 }).then(function (res) {
                     self.results = res.data.results;
@@ -55,12 +56,120 @@
             },
         },
         computed: {
-            resultEmpty: function () {
-                return this.isClicked && this.results.length === 0;
+            length: function () {
+                var len = 0;
+                for (let item in this.results) {
+                    len++
+                }
+                return len
+            },
+            part_response: function () {
+                var part = [];
+                for (let start = (this.page_select - 1) * 10; start < this.page_select * 10; start++) {
+                    if (start < this.length) {
+                        part.push(this.results[start])
+                    }
+                }
+                return part
             }
         }
+
     })
+
+
 </script>
 
 </body>
+
+<style>
+    #header {
+        margin-top: 0;
+        padding: 0;
+        width: 100%;
+        height: 80px;
+        background-color: #FFF;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        z-index: 1;
+    }
+
+    #input {
+        width: 600px;
+        height: 35px;
+    / / border-color: #39F;
+        border-style: solid;
+        border-width: 1px;
+        font-size: 24px;
+        position: relative;
+        left: 15%;
+        top: 8px;
+    }
+
+    #submit {
+        height: 40px;
+        width: 120px;
+        background-color: #39F;
+        border: none;
+        /*border-style: solid;*/
+        font-size: 24px;
+        color: #FFF;
+        margin-top: -1px;
+        /*margin-left: - 10 px;*/
+        position: relative;
+        top: 8px;
+        left: 10%;
+    }
+
+    #result {
+        height: auto;
+        width: 40%;
+        margin-top: 80px;
+        position: relative;
+        left: 15%;
+    }
+
+    #result_number {
+        color: gray;
+        font-size: 16px;
+    }
+
+    #result a {
+        font-size: 18px;
+        color: #0000FF;
+    }
+
+    #result p {
+        margin: 2px;
+    }
+
+    /*#result li{
+        display: inline-block;
+        font-size: 12px;
+        color: #666666;
+    }*/
+    #small_url_content {
+        display: inline-block;
+    }
+
+    #date {
+        display: inline-block;
+        font-size: 12px;
+        color: #666666;
+    }
+
+    #result li a {
+        display: block; /*内联对象需加*/
+        width: 15em;
+        word-break: keep-all; /* 不换行 */
+        white-space: nowrap; /* 不换行 */
+        overflow: hidden; /* 内容超出宽度时隐藏超出部分的内容 */
+        text-overflow: ellipsis; /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+        font-size: 12px;
+        text-decoration: none;
+        color: #008B00;
+    }
+
+</style>
+
 </html>
