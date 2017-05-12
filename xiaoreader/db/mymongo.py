@@ -39,6 +39,14 @@ class MyMongo():
             return [item for item in items]
         return None
 
+    def get_many_regex(self, db, coll, key, value):
+        datebase = self._get_db(db)
+        collect = datebase[coll]
+        items = collect.find({key: {'$regex':value}}, {'_id': 0})
+        if items:
+            return [item for item in items]
+        return None
+
     def get_all(self, db, coll):
         datebase = self._get_db(db)
         collect = datebase[coll]

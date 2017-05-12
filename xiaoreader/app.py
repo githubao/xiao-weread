@@ -14,6 +14,11 @@ def get_results(key):
     return res if res else []
 
 
+def get_soft_results(key):
+    res = mongo.get_many_regex('xiao', 'wxread', 'title', key)
+    return res if res else []
+
+
 # 设置根路由
 @app.route('/')
 def root():
@@ -27,7 +32,7 @@ def search():
         abort(400)
 
     key = request.json['query']
-    result_list = get_results(key)
+    result_list = get_soft_results(key)
 
     results = []
 
