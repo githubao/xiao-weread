@@ -10,11 +10,13 @@
 <body>
 <div id="app" v-cloak>
 
-    <table id="result" border="1">
-            <tr v-for="item in result">
-                <td>{{item.key}}</td>
-                <td>{{item.value}}</td>
-            </tr>
+    <table id="result">
+        <th>key</th>
+        <th>value</th>
+        <tr v-for="item in result">
+            <td>{{item.key}}</td>
+            <td>{{item.value}}</td>
+        </tr>
     </table>
 
 
@@ -49,16 +51,34 @@
 </body>
 
 <style>
-    /*table {*/
-    /*width: 100%;*/
-    /*height: 100%;*/
-    /*}*/
+    table {
+        font-family: verdana, arial, sans-serif;
+        font-size: 11px;
+        color: #333333;
+        border-width: 1px;
+        border-color: #666666;
+        border-collapse: collapse;
+    }
 
-    /*td {*/
-    /*text-align: center;*/
-    /*vertical-align: middle;*/
-    /*}*/
+    table th {
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #666666;
+        background-color: #dedede;
+    }
 
+    table td {
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #666666;
+        background-color: #ffffff;
+    }
+
+    table, th, td {
+        border: 1px solid blue;
+    }
 </style>
 
 </html>
